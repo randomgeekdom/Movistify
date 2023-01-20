@@ -4,13 +4,8 @@ namespace Movistify.Extensions
 {
     public static class SwaggerExtensions
     {
-        public static void AddApiKey(this IServiceCollection services)
+        public static void AddApiKeyForSwagger(this IServiceCollection services)
         {
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            //});
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api Key Auth", Version = "v1" });
