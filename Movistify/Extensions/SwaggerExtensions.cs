@@ -1,8 +1,10 @@
 ﻿using Microsoft.OpenApi.Models;
+using Movistify.Services;
+using Movistify.Services.Interfaces;
 
 namespace Movistify.Extensions
 {
-    public static class SwaggerExtensions
+    public static class StartupExtensions
     {
         public static void AddApiKeyForSwagger(this IServiceCollection services)
         {
@@ -32,6 +34,11 @@ namespace Movistify.Extensions
                     };
                 c.AddSecurityRequirement(requirement);
             });
+        }
+
+        public static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddTransient<IMovieRepository, MovieRepository>();
         }
     }
 }

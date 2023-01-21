@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Movistify.Configuration;
 using Movistify.Extensions;
+using Movistify.MappingProfiles;
 using System;
 
 namespace Movistify
@@ -27,6 +29,12 @@ namespace Movistify
             builder.Services.AddDbContext<MovistifyContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddRepositories();
+
+            builder.Services.AddAutoMapper(x => {
+                x.AddProfile<MovieProfile>();
             });
 
             var app = builder.Build();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movistify;
 
@@ -11,9 +12,11 @@ using Movistify;
 namespace Movistify.Migrations
 {
     [DbContext(typeof(MovistifyContext))]
-    partial class MovistifyContextModelSnapshot : ModelSnapshot
+    [Migration("20230120232747_AddingTaglineToMovie")]
+    partial class AddingTaglineToMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
