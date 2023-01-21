@@ -4,6 +4,7 @@ namespace Movistify.Services.Interfaces
 {
     public interface IMovieRepository
     {
+        Task<bool> AddActorToMovieAsync(Guid actorId, Guid movieId);
         Task AddMovieAsync(EditMovieDto newMovie);
         Task<bool> DeleteMovieAsync(Guid id);
         Task<MovieDto> GetByIdAsync(Guid id);

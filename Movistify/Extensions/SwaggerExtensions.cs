@@ -39,6 +39,7 @@ namespace Movistify.Extensions
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IActorRepository, ActorRepository>();
         }
     }
 }

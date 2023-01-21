@@ -35,6 +35,7 @@ namespace Movistify
 
             builder.Services.AddAutoMapper(x => {
                 x.AddProfile<MovieProfile>();
+                x.AddProfile<ActorProfile>();
             });
 
             var app = builder.Build();

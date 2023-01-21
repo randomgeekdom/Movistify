@@ -61,5 +61,27 @@ namespace Movistify.Services
 
             return false;
         }
+
+        public async Task<bool> AddActorToMovieAsync(Guid actorId, Guid movieId)
+        {
+            var exists = await this.movistifyContext.ActorMovies.AnyAsync(x => x.MovieId == movieId && x.ActorId == actorId);
+            if (!exists)
+            {
+                var movie = await this.movistifyContext.Movies.FindAsync(movieId);
+                var actor = await this.movistifyContext.Actors.FindAsync(actorId);
+                if (movie != null && actor != null)
+                {
+                    await this.movistifyContext.ActorMovies.AddAsync(new ActorMovie
+                    {
+                        ActorId = actorId,
+                        MovieId = movieId
+                    });
+                    await this.movistifyContext.SaveChangesAsync();
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

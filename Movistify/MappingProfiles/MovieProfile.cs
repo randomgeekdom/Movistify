@@ -5,7 +5,7 @@ using Movistify.Models;
 
 namespace Movistify.MappingProfiles
 {
-    public class MovieProfile: Profile
+    public class MovieProfile : Profile
     {
         public MovieProfile()
         {
