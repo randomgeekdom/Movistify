@@ -28,8 +28,12 @@ namespace Movistify
             builder.Services.AddAuthentication(Constants.ApiKey)
     .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(Constants.ApiKey, null);
 
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
+            var path = builder.Configuration["DatabasePath"];
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                var folder = Environment.SpecialFolder.LocalApplicationData;
+                path = Environment.GetFolderPath(folder);
+            }
             var dbpath = System.IO.Path.Join(path, "Movistify.db");
             builder.Services.AddDbContextFactory<MovistifyContext>(options =>
             {
@@ -45,6 +49,11 @@ namespace Movistify
             });
 
             var app = builder.Build();
+
+            using (var context = app.Services.CreateScope().ServiceProvider.GetService<IDbContextFactory<MovistifyContext>>().CreateDbContext())
+            {
+                context.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
