@@ -20,7 +20,7 @@ namespace Movistify.Services
         public async Task<IEnumerable<MovieDto>> SearchMoviesAsync(string titleSearchTerm)
         {
             var context = this.contextFactory.CreateDbContext();
-            var results = await context.Movies.Where(x => x.Title.ToLower().Contains(titleSearchTerm)).ToListAsync();
+            var results = await context.Movies.Where(x => x.Title.ToLower().Contains(titleSearchTerm.ToLower())).ToListAsync();
             return this.mapper.Map<IEnumerable<MovieDto>>(results);
         }
 
