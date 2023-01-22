@@ -8,41 +8,44 @@ namespace Movistify.Services
 {
     public class ActorRepository : IActorRepository
     {
-        private readonly MovistifyContext movistifyContext;
+        private readonly IDbContextFactory<MovistifyContext> contextFactory;
         private readonly IMapper mapper;
 
-        public ActorRepository(MovistifyContext movistifyContext, IMapper mapper)
+        public ActorRepository(IDbContextFactory<MovistifyContext> contextFactory, IMapper mapper)
         {
-            this.movistifyContext = movistifyContext;
+            this.contextFactory = contextFactory;
             this.mapper = mapper;
         }
 
         public async Task<IEnumerable<ActorDto>> SearchActorsAsync(string nameSearchTerm)
         {
-            var results = await this.movistifyContext.Actors.Where(x => x.Name.ToLower().Contains(nameSearchTerm)).ToListAsync();
+            var context = this.contextFactory.CreateDbContext();
+            var results = await context.Actors.Where(x => x.Name.ToLower().Contains(nameSearchTerm.ToLower())).ToListAsync();
             return this.mapper.Map<IEnumerable<ActorDto>>(results);
         }
 
         public async Task AddActorAsync(EditActorDto newActor)
         {
-            var ActorEntity = this.mapper.Map<Actor>(newActor);
-            await this.movistifyContext.Actors.AddAsync(ActorEntity);
-            await this.movistifyContext.SaveChangesAsync();
+            var context = this.contextFactory.CreateDbContext();
+            var actorEntity = this.mapper.Map<Actor>(newActor);
+            await context.Actors.AddAsync(actorEntity);
+            await context.SaveChangesAsync();
         }
 
         public async Task<ActorDetailsDto?> GetByIdAsync(Guid id)
         {
-            var actor = await this.movistifyContext.Actors.FindAsync(id);
+            var context = this.contextFactory.CreateDbContext();
+            var actor = await context.Actors.FirstOrDefaultAsync(x=>x.Id == id);
 
             var dto = default(ActorDetailsDto);
             if (actor != null)
             {
                 dto = this.mapper.Map<ActorDetailsDto>(actor);
 
-                var movieIds = await this.movistifyContext.ActorMovies.Where(x => x.ActorId == id).Select(x => x.MovieId).ToListAsync();
+                var movieIds = await context.ActorMovies.Where(x => x.ActorId == id).Select(x => x.MovieId).ToListAsync();
                 if (movieIds.Any())
                 {
-                    var movies = await this.movistifyContext.Movies.Where(x => movieIds.Contains(x.Id)).ToListAsync();
+                    var movies = await context.Movies.Where(x => movieIds.Contains(x.Id)).ToListAsync();
                     dto.Movies = this.mapper.Map<IEnumerable<MovieDto>>(movies);
                 }
             }
@@ -52,11 +55,12 @@ namespace Movistify.Services
 
         public async Task<bool> UpdateActorAsync(Guid id, EditActorDto editActorDto)
         {
-            var actor = await this.movistifyContext.Actors.FindAsync(id);
+            var context = this.contextFactory.CreateDbContext();
+            var actor = await context.Actors.FirstOrDefaultAsync(x=> x.Id == id);
             if (actor != null)
             {
                 this.mapper.Map(editActorDto, actor);
-                await this.movistifyContext.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return true;
             }
 
@@ -65,11 +69,12 @@ namespace Movistify.Services
 
         public async Task<bool> DeleteActorAsync(Guid id)
         {
-            var actor = await this.movistifyContext.Actors.FindAsync(id);
+            var context = this.contextFactory.CreateDbContext();
+            var actor = await context.Actors.FindAsync(id);
             if (actor != null)
             {
-                this.movistifyContext.Remove(actor);
-                await this.movistifyContext.SaveChangesAsync();
+                context.Remove(actor);
+                await context.SaveChangesAsync();
                 return true;
             }
 

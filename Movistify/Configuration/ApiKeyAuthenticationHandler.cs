@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using Movistify.Models;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 

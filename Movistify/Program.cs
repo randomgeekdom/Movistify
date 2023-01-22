@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Movistify.Configuration;
 using Movistify.Extensions;
 using Movistify.MappingProfiles;
+using Movistify.Models;
 using System;
 
 namespace Movistify
@@ -26,10 +27,11 @@ namespace Movistify
             builder.Services.AddAuthentication(Constants.ApiKey)
     .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(Constants.ApiKey, null);
 
-            builder.Services.AddDbContext<MovistifyContext>(options =>
+            builder.Services.AddDbContextFactory<MovistifyContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+            },
+    ServiceLifetime.Scoped);
 
             builder.Services.AddRepositories();
 

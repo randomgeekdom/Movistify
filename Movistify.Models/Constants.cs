@@ -1,4 +1,4 @@
-﻿namespace Movistify
+﻿namespace Movistify.Models
 {
     public static class Constants
     {

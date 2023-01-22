@@ -3,12 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movistify", "Movistify\Movistify.csproj", "{F44A1200-D501-4BA7-9658-48461FEAFB8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movistify", "Movistify\Movistify.csproj", "{F44A1200-D501-4BA7-9658-48461FEAFB8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD43B763-BDF8-46BC-AC31-752BC55FD292}"
 	ProjectSection(SolutionItems) = preProject
 		TODO.txt = TODO.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movistify.Models", "Movistify.Models\Movistify.Models.csproj", "{D5B8340C-06BF-4BB3-B571-7B973E0D84C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movistify.Dtos", "Movistify.Dtos\Movistify.Dtos.csproj", "{721F27CB-084B-416B-8CD3-AE7204780256}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movistify.Services", "Movistify.Services\Movistify.Services.csproj", "{8B7EF6B4-1AE8-42B9-ABEC-8DE225349A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movistify.Services.Tests", "Movistify.Services.Tests\Movistify.Services.Tests.csproj", "{38032EF0-CD46-45C6-A4DA-FE9F15816D18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +28,22 @@ Global
 		{F44A1200-D501-4BA7-9658-48461FEAFB8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F44A1200-D501-4BA7-9658-48461FEAFB8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F44A1200-D501-4BA7-9658-48461FEAFB8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B8340C-06BF-4BB3-B571-7B973E0D84C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B8340C-06BF-4BB3-B571-7B973E0D84C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B8340C-06BF-4BB3-B571-7B973E0D84C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B8340C-06BF-4BB3-B571-7B973E0D84C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{721F27CB-084B-416B-8CD3-AE7204780256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721F27CB-084B-416B-8CD3-AE7204780256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721F27CB-084B-416B-8CD3-AE7204780256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721F27CB-084B-416B-8CD3-AE7204780256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B7EF6B4-1AE8-42B9-ABEC-8DE225349A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B7EF6B4-1AE8-42B9-ABEC-8DE225349A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B7EF6B4-1AE8-42B9-ABEC-8DE225349A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B7EF6B4-1AE8-42B9-ABEC-8DE225349A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38032EF0-CD46-45C6-A4DA-FE9F15816D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38032EF0-CD46-45C6-A4DA-FE9F15816D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38032EF0-CD46-45C6-A4DA-FE9F15816D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38032EF0-CD46-45C6-A4DA-FE9F15816D18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
