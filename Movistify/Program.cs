@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Movistify.Configuration;
 using Movistify.Extensions;
 using Movistify.MappingProfiles;
@@ -27,9 +28,12 @@ namespace Movistify
             builder.Services.AddAuthentication(Constants.ApiKey)
     .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(Constants.ApiKey, null);
 
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            var dbpath = System.IO.Path.Join(path, "Movistify.db");
             builder.Services.AddDbContextFactory<MovistifyContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlite($"Data Source={dbpath}", x=> x.MigrationsAssembly("Movistify"));
             },
     ServiceLifetime.Scoped);
 

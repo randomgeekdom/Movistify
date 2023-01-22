@@ -10,6 +10,7 @@ namespace Movistify
         {
         }
 
+        
         public virtual DbSet<Actor> Actors { get; set; }
         public virtual DbSet<MovieRating> MovieRatings { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
