@@ -1,6 +1,8 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Movistify.Services;
 using Movistify.Services.Interfaces;
+using System.Reflection;
 
 namespace Movistify.Extensions
 {
@@ -10,7 +12,7 @@ namespace Movistify.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api Key Auth", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Movistify API", Version = "v1" });
                 c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
                 {
                     Description = "ApiKey must appear in header",
@@ -33,6 +35,10 @@ namespace Movistify.Extensions
                              { key, new List<string>() }
                     };
                 c.AddSecurityRequirement(requirement);
+
+                // using System.Reflection;
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
         }
 

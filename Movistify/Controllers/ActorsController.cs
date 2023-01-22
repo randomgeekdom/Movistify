@@ -19,7 +19,11 @@ namespace Movistify.Controllers
             this.ActorRepository = ActorRepository;
         }
 
-        // DELETE api/<ActorsController>/5
+
+        /// <summary>
+        /// Deletes an actor from the database by the ID
+        /// </summary>
+        /// <param name="id">Actor Id (Guid)</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -31,6 +35,10 @@ namespace Movistify.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Get an actor and all their movies by ID
+        /// </summary>
+        /// <param name="id">Actor id</param>
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
@@ -38,7 +46,10 @@ namespace Movistify.Controllers
             return Ok(await this.ActorRepository.GetByIdAsync(id));
         }
 
-        // POST api/<ActorsController>
+        /// <summary>
+        /// Add a new actor in the database
+        /// </summary>
+        /// <param name="ActorDto">The actor's information</param>
         [HttpPost]
         public async Task<IActionResult> Post(EditActorDto ActorDto)
         {
@@ -46,7 +57,12 @@ namespace Movistify.Controllers
             return Ok();
         }
 
-        // PUT api/<ActorsController>/5
+        /// <summary>
+        /// Update an existing actor's information
+        /// </summary>
+        /// <param name="id">actor id</param>
+        /// <param name="editActorDto">The new information about the actor</param>
+        /// <returns>OK if the actor exists.  Bad Request if not.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] EditActorDto editActorDto)
         {
@@ -58,6 +74,11 @@ namespace Movistify.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Search for an actor by their name
+        /// </summary>
+        /// <param name="searchTerm">The search term</param>
+        /// <returns>A list of actors with names that contain the search term</returns>
         [AllowAnonymous]
         [HttpGet("search/{searchTerm}")]
         public async Task<IActionResult> Search(string searchTerm)
