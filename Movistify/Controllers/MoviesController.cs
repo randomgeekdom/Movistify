@@ -43,7 +43,7 @@ namespace Movistify.Controllers
             return Ok();
         }
 
-        // GET api/<MoviesController>/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -76,6 +76,17 @@ namespace Movistify.Controllers
         {
             var movies = await this.movieRepository.SearchMoviesAsync(searchTerm);
             return Ok(movies);
+        }
+
+        [HttpPost("rate")]
+        public async Task<IActionResult> Rate([FromBody] MovieRatingDto ratingDto)
+        {
+            var isSuccess = await this.movieRepository.RateMovieAsync(ratingDto);
+            if (!isSuccess)
+            {
+                return new BadRequestObjectResult(ratingDto);
+            }
+            return Ok();
         }
     }
 }

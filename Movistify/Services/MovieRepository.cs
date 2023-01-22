@@ -30,10 +30,28 @@ namespace Movistify.Services
             await this.movistifyContext.SaveChangesAsync();
         }
 
-        public async Task<MovieDto> GetByIdAsync(Guid id)
+        public async Task<MovieDetailsDto?> GetByIdAsync(Guid id)
         {
-            var movie = await this.movistifyContext.Movies.FindAsync(id);
-            return this.mapper.Map<MovieDto>(movie);
+            var movie = await this.movistifyContext.Movies.FirstOrDefaultAsync(x=>x.Id == id);
+
+            if(movie != null)
+            {
+                var movieDto = this.mapper.Map<MovieDetailsDto>(movie);
+
+                var actorIds = await this.movistifyContext.ActorMovies.Where(x => x.MovieId == id).Select(x => x.ActorId).ToListAsync();
+                if (actorIds.Any())
+                {
+                    var actors = await this.movistifyContext.Actors.Where(x => actorIds.Contains(x.Id)).ToListAsync();
+                    movieDto.Actors = this.mapper.Map<IEnumerable<ActorDto>>(actors);
+                }
+
+                var ratings = await this.movistifyContext.MovieRatings.Where(x => x.MovieId == id).ToListAsync();
+                movieDto.Ratings = this.mapper.Map<IEnumerable<MovieRatingDto>>(ratings);
+
+                return movieDto;
+            }
+
+            return null;
         }
 
         public async Task<bool> UpdateMovieAsync(Guid id, EditMovieDto editMovieDto)
@@ -79,6 +97,25 @@ namespace Movistify.Services
                     await this.movistifyContext.SaveChangesAsync();
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        public async Task<bool> RateMovieAsync(MovieRatingDto ratingDto)
+        {
+            if(ratingDto.Rating < 0 || ratingDto.Rating > 100 || string.IsNullOrWhiteSpace(ratingDto.ReviewerName))
+            {
+                return false;
+            }
+
+            var exists = await this.movistifyContext.Movies.AnyAsync(x => x.Id == ratingDto.MovieId);
+            if (exists)
+            {
+                var rating = this.mapper.Map<MovieRating>(ratingDto);
+                await this.movistifyContext.MovieRatings.AddAsync(rating);
+                await this.movistifyContext.SaveChangesAsync();
+                return true;
             }
 
             return false;

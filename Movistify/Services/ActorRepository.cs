@@ -30,18 +30,32 @@ namespace Movistify.Services
             await this.movistifyContext.SaveChangesAsync();
         }
 
-        public async Task<ActorDto> GetByIdAsync(Guid id)
+        public async Task<ActorDetailsDto?> GetByIdAsync(Guid id)
         {
-            var Actor = await this.movistifyContext.Actors.FindAsync(id);
-            return this.mapper.Map<ActorDto>(Actor);
+            var actor = await this.movistifyContext.Actors.FindAsync(id);
+
+            var dto = default(ActorDetailsDto);
+            if (actor != null)
+            {
+                dto = this.mapper.Map<ActorDetailsDto>(actor);
+
+                var movieIds = await this.movistifyContext.ActorMovies.Where(x => x.ActorId == id).Select(x => x.MovieId).ToListAsync();
+                if (movieIds.Any())
+                {
+                    var movies = await this.movistifyContext.Movies.Where(x => movieIds.Contains(x.Id)).ToListAsync();
+                    dto.Movies = this.mapper.Map<IEnumerable<MovieDto>>(movies);
+                }
+            }
+
+            return dto;
         }
 
         public async Task<bool> UpdateActorAsync(Guid id, EditActorDto editActorDto)
         {
-            var Actor = await this.movistifyContext.Actors.FindAsync(id);
-            if (Actor != null)
+            var actor = await this.movistifyContext.Actors.FindAsync(id);
+            if (actor != null)
             {
-                this.mapper.Map(editActorDto, Actor);
+                this.mapper.Map(editActorDto, actor);
                 await this.movistifyContext.SaveChangesAsync();
                 return true;
             }
@@ -51,10 +65,10 @@ namespace Movistify.Services
 
         public async Task<bool> DeleteActorAsync(Guid id)
         {
-            var Actor = await this.movistifyContext.Actors.FindAsync(id);
-            if (Actor != null)
+            var actor = await this.movistifyContext.Actors.FindAsync(id);
+            if (actor != null)
             {
-                this.movistifyContext.Remove(Actor);
+                this.movistifyContext.Remove(actor);
                 await this.movistifyContext.SaveChangesAsync();
                 return true;
             }

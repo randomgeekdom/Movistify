@@ -6,7 +6,7 @@ namespace Movistify.Services.Interfaces
     {
         Task AddActorAsync(EditActorDto newActor);
         Task<bool> DeleteActorAsync(Guid id);
-        Task<ActorDto> GetByIdAsync(Guid id);
+        Task<ActorDetailsDto> GetByIdAsync(Guid id);
         Task<IEnumerable<ActorDto>> SearchActorsAsync(string nameSearchTerm);
         Task<bool> UpdateActorAsync(Guid id, EditActorDto editActorDto);
     }

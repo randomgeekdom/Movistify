@@ -12,6 +12,7 @@ namespace Movistify.MappingProfiles
             CreateMap<ActorDto, Actor>();
             CreateMap<EditActorDto, Actor>();
             CreateMap<Actor, ActorDto>();
+            CreateMap<Actor, ActorDetailsDto>();
         }
     }
 }

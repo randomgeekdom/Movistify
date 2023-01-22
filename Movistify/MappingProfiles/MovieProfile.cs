@@ -2,6 +2,7 @@
 using AutoMapper;
 using Movistify.Dtos;
 using Movistify.Models;
+using System.Runtime.CompilerServices;
 
 namespace Movistify.MappingProfiles
 {
@@ -12,6 +13,9 @@ namespace Movistify.MappingProfiles
             CreateMap<MovieDto, Movie>();
             CreateMap<EditMovieDto, Movie>();
             CreateMap<Movie, MovieDto>();
+            CreateMap<Movie, MovieDetailsDto>();
+            CreateMap<MovieRatingDto, MovieRating>();
+            CreateMap<MovieRating, MovieRatingDto>();
         }
     }
 }

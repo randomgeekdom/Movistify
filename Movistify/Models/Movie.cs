@@ -1,4 +1,6 @@
-﻿namespace Movistify.Models
+﻿using System.Collections.ObjectModel;
+
+namespace Movistify.Models
 {
     public class Movie : Entity
     {
